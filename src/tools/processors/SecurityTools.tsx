@@ -28,15 +28,18 @@ export const SecurityTools: React.FC<Props> = ({ tool }) => {
     md5?: string;
   } | null>(null);
 
-  const handleFiles = async (selected: File[]) => {
+  const handleFileSelection = (selected: File[]) => {
     setFiles(selected);
     setError(null);
     setFileMeta(null);
     setChecksums(null);
+  };
 
-    if (selected.length === 0) return;
-    const file = selected[0];
+  const handleAnalyze = async () => {
+    if (files.length === 0) return;
+    const file = files[0];
     setIsProcessing(true);
+    setError(null);
 
     try {
       const buffer = await readFileAsArrayBuffer(file);
@@ -92,7 +95,34 @@ export const SecurityTools: React.FC<Props> = ({ tool }) => {
 
   return (
     <div className="space-y-6">
-      <FileUploader files={files} onFilesChange={handleFiles} disabled={isProcessing} />
+      <FileUploader files={files} onFilesChange={handleFileSelection} disabled={isProcessing} />
+
+      {files.length > 0 && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={handleAnalyze}
+            disabled={isProcessing}
+            className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-50"
+          >
+            {isProcessing ? (
+              <>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Analyzing File...</span>
+              </>
+            ) : (
+              <>
+                <ShieldCheck className="h-4 w-4" />
+                <span>
+                  {tool.id === 'file-hash-checksum'
+                    ? 'Calculate Hashes & Checksums Now'
+                    : 'Inspect File Metadata & Details'}
+                </span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       {isProcessing && (
         <div className="flex items-center justify-center p-8">

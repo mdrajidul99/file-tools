@@ -4,7 +4,7 @@ import { ToolInfo } from '../../types';
 import { FileUploader } from '../../components/FileUploader';
 import { readFileAsDataURL, downloadBlob, formatBytes } from '../../utils/fileUtils';
 import { getImageInfo } from '../../utils/imageUtils';
-import { Copy, Check, Download, AlertCircle, FileCode, Eye } from 'lucide-react';
+import { Copy, Check, Download, AlertCircle, FileCode, Eye, RefreshCw } from 'lucide-react';
 
 interface Props {
   tool: ToolInfo;
@@ -30,32 +30,46 @@ export const ImageBase64Tool: React.FC<Props> = ({ tool }) => {
     size: number;
   } | null>(null);
 
+  const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Handle Image to Base64 or Inspector
-  const handleFileChange = async (selectedFiles: File[]) => {
+  const handleFileChange = (selectedFiles: File[]) => {
     setFiles(selectedFiles);
     setError(null);
     setBase64Output('');
     setImageMeta(null);
+  };
 
-    if (selectedFiles.length > 0) {
-      const file = selectedFiles[0];
-      try {
-        if (tool.id === 'image-to-base64') {
-          const dataUrl = await readFileAsDataURL(file);
-          setBase64Output(dataUrl);
-        } else if (tool.id === 'image-inspector') {
-          const info = await getImageInfo(file);
-          setImageMeta({
-            ...info,
-            mime: file.type || 'image/unknown',
-            size: file.size,
-          });
-        }
-      } catch (err: any) {
-        setError(err?.message || 'Failed to inspect image');
-      }
+  const handleConvertImageToBase64 = async () => {
+    if (files.length === 0) return;
+    setIsProcessing(true);
+    setError(null);
+    try {
+      const dataUrl = await readFileAsDataURL(files[0]);
+      setBase64Output(dataUrl);
+    } catch (err: any) {
+      setError(err?.message || 'Failed to convert image to Base64');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleInspectImage = async () => {
+    if (files.length === 0) return;
+    setIsProcessing(true);
+    setError(null);
+    try {
+      const file = files[0];
+      const info = await getImageInfo(file);
+      setImageMeta({
+        ...info,
+        mime: file.type || 'image/unknown',
+        size: file.size,
+      });
+    } catch (err: any) {
+      setError(err?.message || 'Failed to inspect image');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -100,6 +114,29 @@ export const ImageBase64Tool: React.FC<Props> = ({ tool }) => {
             onFilesChange={handleFileChange}
             acceptedExtensions={['.jpg', '.jpeg', '.png', '.webp', '.svg', '.gif']}
           />
+
+          {files.length > 0 && (
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={handleConvertImageToBase64}
+                disabled={isProcessing}
+                className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-50"
+              >
+                {isProcessing ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                    <span>Converting to Base64...</span>
+                  </>
+                ) : (
+                  <>
+                    <FileCode className="h-4 w-4" />
+                    <span>Convert to Base64 Now</span>
+                  </>
+                )}
+              </button>
+            </div>
+          )}
 
           {base64Output && (
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
@@ -203,6 +240,29 @@ export const ImageBase64Tool: React.FC<Props> = ({ tool }) => {
             onFilesChange={handleFileChange}
             acceptedExtensions={['.jpg', '.jpeg', '.png', '.webp', '.svg', '.gif', '.bmp']}
           />
+
+          {files.length > 0 && (
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={handleInspectImage}
+                disabled={isProcessing}
+                className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-50"
+              >
+                {isProcessing ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                    <span>Analyzing Image...</span>
+                  </>
+                ) : (
+                  <>
+                    <Eye className="h-4 w-4" />
+                    <span>Inspect Image Specifications</span>
+                  </>
+                )}
+              </button>
+            </div>
+          )}
 
           {imageMeta && (
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">

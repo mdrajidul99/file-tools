@@ -233,7 +233,7 @@ export const translations = {
         {
           title: '3. Local Storage',
           content:
-            'We use browser localStorage exclusively to persist your interface preferences, such as Dark Mode / Light Mode, selected language (English or Bangla), and your list of favorite or recently accessed tools. No uploaded file contents are ever stored in localStorage.',
+            'We use browser localStorage exclusively to persist your interface preferences, such as Dark Mode / Light Mode, selected language (English or Bangla), and your recently accessed tools. No uploaded file contents are ever stored in localStorage.',
         },
         {
           title: '4. Third-Party Advertising (Adsterra)',
@@ -553,7 +553,7 @@ export const translations = {
         {
           title: '৩. লোকাল স্টোরেজের ব্যবহার',
           content:
-            'শুধুমাত্র আপনার ডার্ক মোড / লাইট মোড পছন্দ, ভাষা (ইংরেজি / বাংলা) এবং পছন্দের টুলসের তালিকা মনে রাখার জন্য ব্রাউজারের লোকাল স্টোরেজ ব্যবহার করা হয়।',
+            'শুধুমাত্র আপনার ডার্ক মোড / লাইট মোড পছন্দ এবং ভাষা (ইংরেজি / বাংলা) মনে রাখার জন্য ব্রাউজারের লোকাল স্টোরেজ ব্যবহার করা হয়। কোনো ফাইলের তথ্য লোকাল স্টোরেজে রাখা হয় না।',
         },
         {
           title: '৪. তৃতীয় পক্ষের বিজ্ঞাপন (Adsterra)',

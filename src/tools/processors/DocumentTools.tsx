@@ -39,6 +39,11 @@ export const DocumentTools: React.FC<Props> = ({ tool }) => {
   const [csvRows, setCsvRows] = useState<any[]>([]);
   const [csvFilter, setCsvFilter] = useState('');
 
+  // Previews
+  const [showMarkdownPreview, setShowMarkdownPreview] = useState(false);
+  const [renderedHtml, setRenderedHtml] = useState<string>('');
+  const [analyzedStats, setAnalyzedStats] = useState<boolean>(false);
+
   // JSON spacing
   const [jsonIndent, setJsonIndent] = useState<number>(2);
 
@@ -50,9 +55,6 @@ export const DocumentTools: React.FC<Props> = ({ tool }) => {
       try {
         const text = await readFileAsText(selected[0]);
         setInputText(text);
-        if (tool.id === 'csv-viewer') {
-          setCsvRows(csvToJson(text));
-        }
       } catch (err: any) {
         setError('Failed to read file content.');
       }
@@ -60,7 +62,7 @@ export const DocumentTools: React.FC<Props> = ({ tool }) => {
   };
 
   // Live calculation for Word Counter
-  const stats = tool.id === 'word-counter' ? getTextStatistics(inputText) : null;
+  const stats = getTextStatistics(inputText);
 
   // Handle format actions
   const handleFormat = () => {
@@ -206,11 +208,75 @@ export const DocumentTools: React.FC<Props> = ({ tool }) => {
         {(tool.id === 'xml-formatter' || tool.id === 'html-to-txt') && (
           <div className="flex justify-end pt-2">
             <button
+              type="button"
               onClick={handleFormat}
               disabled={!inputText.trim()}
-              className="rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition"
+              className="rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition disabled:opacity-50"
             >
               {tool.id === 'xml-formatter' ? 'Format & Validate XML' : 'Extract Plain Text'}
+            </button>
+          </div>
+        )}
+
+        {tool.id === 'word-counter' && (
+          <div className="flex justify-end pt-2">
+            <button
+              type="button"
+              onClick={() => setAnalyzedStats(true)}
+              disabled={!inputText.trim()}
+              className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+            >
+              <Type className="h-4 w-4" />
+              Analyze & Count Words
+            </button>
+          </div>
+        )}
+
+        {tool.id === 'markdown-viewer' && (
+          <div className="flex justify-end pt-2">
+            <button
+              type="button"
+              onClick={() => setShowMarkdownPreview(true)}
+              disabled={!inputText.trim()}
+              className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+            >
+              <Eye className="h-4 w-4" />
+              Render Markdown Preview
+            </button>
+          </div>
+        )}
+
+        {tool.id === 'html-viewer' && (
+          <div className="flex justify-end pt-2">
+            <button
+              type="button"
+              onClick={() => setRenderedHtml(inputText)}
+              disabled={!inputText.trim()}
+              className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+            >
+              <Eye className="h-4 w-4" />
+              Render HTML Preview
+            </button>
+          </div>
+        )}
+
+        {tool.id === 'csv-viewer' && (
+          <div className="flex justify-end pt-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (!inputText.trim()) return;
+                try {
+                  setCsvRows(csvToJson(inputText));
+                } catch (e: any) {
+                  setError('Failed to parse CSV: ' + (e?.message || 'Invalid format'));
+                }
+              }}
+              disabled={!inputText.trim()}
+              className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+            >
+              <Table className="h-4 w-4" />
+              Parse & View CSV Table
             </button>
           </div>
         )}
@@ -294,7 +360,7 @@ export const DocumentTools: React.FC<Props> = ({ tool }) => {
       )}
 
       {/* Markdown Live Preview */}
-      {tool.id === 'markdown-viewer' && inputText && (
+      {(tool.id === 'markdown-viewer' || tool.id === 'markdown-to-html') && (showMarkdownPreview || formattedText) && inputText && (
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -321,13 +387,13 @@ export const DocumentTools: React.FC<Props> = ({ tool }) => {
       )}
 
       {/* HTML Sandboxed Live Viewer */}
-      {tool.id === 'html-viewer' && inputText && (
+      {tool.id === 'html-viewer' && renderedHtml && (
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
             Safe Sandboxed Render
           </span>
           <iframe
-            srcDoc={inputText}
+            srcDoc={renderedHtml}
             title="HTML Preview"
             sandbox="allow-same-origin"
             className="w-full h-80 rounded-xl border border-slate-200 bg-white dark:border-slate-700"

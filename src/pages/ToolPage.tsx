@@ -4,7 +4,7 @@ import { ToolInfo } from '../types';
 import { CATEGORIES } from '../data/toolsRegistry';
 import { Icon } from '../components/Icon';
 import { AdsterraAd } from '../components/AdsterraAd';
-import { Star, ChevronRight, ShieldCheck, ArrowLeft, Info, HelpCircle } from 'lucide-react';
+import { ChevronRight, ShieldCheck, ArrowLeft, Info, HelpCircle } from 'lucide-react';
 
 // Processors
 import { ImageConvertTool } from '../tools/processors/ImageConvertTool';
@@ -25,7 +25,7 @@ interface ToolPageProps {
 }
 
 export const ToolPage: React.FC<ToolPageProps> = ({ tool, onNavigate }) => {
-  const { language, t, isFavorite, toggleFavorite, addRecentTool } = useApp();
+  const { language, t, addRecentTool } = useApp();
 
   useEffect(() => {
     addRecentTool(tool.id);
@@ -213,20 +213,6 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool, onNavigate }) => {
               </p>
             </div>
           </div>
-
-          {/* Favorite Toggle Button */}
-          <button
-            onClick={() => toggleFavorite(tool.id)}
-            className={`self-start sm:self-auto flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-              isFavorite(tool.id)
-                ? 'border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
-                : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
-            }`}
-            title="Save to favorites"
-          >
-            <Star className={`h-4 w-4 ${isFavorite(tool.id) ? 'fill-current text-amber-500' : ''}`} />
-            <span>{isFavorite(tool.id) ? 'Favorited' : 'Favorite'}</span>
-          </button>
         </div>
       </div>
 

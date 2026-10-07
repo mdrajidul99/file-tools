@@ -4,7 +4,7 @@ import { CategoryId } from '../types';
 import { CATEGORIES, TOOLS } from '../data/toolsRegistry';
 import { Icon } from '../components/Icon';
 import { AdsterraAd } from '../components/AdsterraAd';
-import { ChevronRight, ArrowRight, Star } from 'lucide-react';
+import { ChevronRight, ArrowRight } from 'lucide-react';
 
 interface Props {
   categoryId: CategoryId;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const CategoryDetailPage: React.FC<Props> = ({ categoryId, onNavigate }) => {
-  const { language, t, isFavorite, toggleFavorite } = useApp();
+  const { language, t } = useApp();
 
   const category = CATEGORIES.find((c) => c.id === categoryId);
   const categoryTools = TOOLS.filter((t) => t.categoryId === categoryId);
@@ -80,26 +80,11 @@ export const CategoryDetailPage: React.FC<Props> = ({ categoryId, onNavigate }) 
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/70 dark:text-indigo-400">
                   <Icon name={tool.iconName} className="h-5 w-5" />
                 </div>
-                <div className="flex items-center gap-1.5">
-                  {tool.badge && (
-                    <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                      {tool.badge}
-                    </span>
-                  )}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(tool.id);
-                    }}
-                    className={`p-1 transition ${
-                      isFavorite(tool.id)
-                        ? 'text-amber-500'
-                        : 'text-slate-300 hover:text-amber-500 dark:text-slate-600'
-                    }`}
-                  >
-                    <Star className="h-4 w-4 fill-current" />
-                  </button>
-                </div>
+                {tool.badge && (
+                  <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                    {tool.badge}
+                  </span>
+                )}
               </div>
 
               <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 dark:text-white dark:group-hover:text-indigo-400 transition">

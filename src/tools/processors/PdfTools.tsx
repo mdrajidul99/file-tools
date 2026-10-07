@@ -62,16 +62,18 @@ export const PdfTools: React.FC<Props> = ({ tool }) => {
     creationDate: string;
   } | null>(null);
 
-  // If tool is PDF Metadata, auto inspect on file select
-  useEffect(() => {
-    if (tool.id === 'pdf-metadata' && files.length > 0) {
-      getPdfMetadata(files[0])
-        .then((m) => setMetaInfo(m))
-        .catch((e) => setError(e?.message || 'Failed to read PDF metadata.'));
-    } else {
-      setMetaInfo(null);
-    }
-  }, [files, tool.id]);
+  // Remove auto-inspect useEffect, let user click the button
+  const getActionButtonLabel = () => {
+    if (tool.id === 'pdf-merge') return `Merge ${files.length} PDF${files.length > 1 ? 's' : ''} Now`;
+    if (tool.id === 'pdf-split') return 'Split & Extract Pages Now';
+    if (tool.id === 'pdf-rotate') return `Rotate PDF (${rotationAngle}°) Now`;
+    if (tool.id === 'pdf-delete-pages') return 'Delete Selected Pages Now';
+    if (tool.id === 'images-to-pdf') return `Convert ${files.length} Image${files.length > 1 ? 's' : ''} to PDF`;
+    if (tool.id === 'pdf-to-img') return 'Convert PDF to Images Now';
+    if (tool.id === 'pdf-to-text') return 'Extract Text from PDF Now';
+    if (tool.id === 'pdf-metadata') return 'Inspect PDF Metadata Now';
+    return 'Process PDF Now';
+  };
 
   const handleProcess = async () => {
     if (files.length === 0) return;
@@ -80,12 +82,16 @@ export const PdfTools: React.FC<Props> = ({ tool }) => {
     setResultPdf(null);
     setResultImages([]);
     setExtractedText('');
+    setMetaInfo(null);
 
     try {
       const file = files[0];
       const baseName = getBaseFileName(file.name);
 
-      if (tool.id === 'pdf-merge') {
+      if (tool.id === 'pdf-metadata') {
+        const m = await getPdfMetadata(file);
+        setMetaInfo(m);
+      } else if (tool.id === 'pdf-merge') {
         if (files.length < 2) {
           throw new Error('Please select at least 2 PDF files to merge.');
         }
@@ -243,28 +249,26 @@ export const PdfTools: React.FC<Props> = ({ tool }) => {
               )}
 
               {/* Process Action Button */}
-              {tool.id !== 'pdf-metadata' && (
-                <div className="flex justify-end pt-2">
-                  <button
-                    type="button"
-                    onClick={handleProcess}
-                    disabled={isProcessing}
-                    className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-50"
-                  >
-                    {isProcessing ? (
-                      <>
-                        <RefreshCw className="h-4 w-4 animate-spin" />
-                        <span>{t.common.processing}</span>
-                      </>
-                    ) : (
-                      <>
-                        <RefreshCw className="h-4 w-4" />
-                        <span>Process PDF Now</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              )}
+              <div className="flex justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={handleProcess}
+                  disabled={isProcessing}
+                  className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-50"
+                >
+                  {isProcessing ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      <span>{t.common.processing}</span>
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="h-4 w-4" />
+                      <span>{getActionButtonLabel()}</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           )}
 

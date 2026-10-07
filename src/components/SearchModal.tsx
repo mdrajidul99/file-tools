@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { TOOLS } from '../data/toolsRegistry';
 import { Icon } from './Icon';
-import { Search, X, ArrowRight, Star } from 'lucide-react';
+import { Search, X, ArrowRight } from 'lucide-react';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface SearchModalProps {
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSelectTool }) => {
-  const { language, t, isFavorite, toggleFavorite } = useApp();
+  const { language, t } = useApp();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -148,21 +148,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
                     </div>
                   </button>
 
-                  <div className="flex items-center gap-2 pl-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleFavorite(tool.id);
-                      }}
-                      className={`rounded-lg p-1.5 transition ${
-                        isFavorite(tool.id)
-                          ? 'text-amber-500'
-                          : 'text-slate-300 hover:text-amber-500 dark:text-slate-600'
-                      }`}
-                      title={isFavorite(tool.id) ? t.common.removeFavorite : t.common.saveFavorite}
-                    >
-                      <Star className="h-4 w-4 fill-current" />
-                    </button>
+                  <div className="flex items-center pl-2">
                     <button
                       onClick={() => {
                         onSelectTool(tool.slug);
