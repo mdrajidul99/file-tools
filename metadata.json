@@ -1,0 +1,6 @@
+{
+  "name": "File Tools",
+  "description": "All-in-one free, client-side file tools: convert, compress, edit, create, inspect and analyze files securely in your browser.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
