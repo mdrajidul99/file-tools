@@ -154,7 +154,15 @@ export const ImageConvertTool: React.FC<Props> = ({ tool }) => {
                   ) : (
                     <>
                       <RefreshCw className="h-4 w-4" />
-                      <span>Convert Now</span>
+                      <span>
+                        {defaultTargetFormat === 'application/pdf'
+                          ? `Convert ${files.length} Image${files.length > 1 ? 's' : ''} to PDF Now`
+                          : defaultTargetFormat === 'image/png'
+                          ? 'Convert to PNG Now'
+                          : defaultTargetFormat === 'image/webp'
+                          ? 'Convert to WebP Now'
+                          : 'Convert to JPG Now'}
+                      </span>
                     </>
                   )}
                 </button>

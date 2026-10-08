@@ -214,15 +214,17 @@ export const ImageTransformTool: React.FC<Props> = ({ tool }) => {
             disabled={isProcessing}
           />
 
-          {files.length > 0 && originalInfo && (
+          {files.length > 0 && (
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-5">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
                 <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">
                   {t.common.options}
                 </h3>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
-                  Original: {originalInfo.width} × {originalInfo.height} px ({originalInfo.aspectRatio})
-                </span>
+                {originalInfo && (
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                    Original: {originalInfo.width} × {originalInfo.height} px ({originalInfo.aspectRatio})
+                  </span>
+                )}
               </div>
 
               {/* Resize Options */}
@@ -515,7 +517,23 @@ export const ImageTransformTool: React.FC<Props> = ({ tool }) => {
                   ) : (
                     <>
                       <Sliders className="h-4 w-4" />
-                      <span>Apply & Process</span>
+                      <span>
+                        {tool.id === 'image-resize'
+                          ? 'Resize Image Now'
+                          : tool.id === 'image-crop'
+                          ? 'Crop Image Now'
+                          : tool.id === 'image-rotate-flip'
+                          ? 'Rotate & Flip Image Now'
+                          : tool.id === 'image-compress' || tool.id === 'compress-image'
+                          ? 'Compress Image Now'
+                          : tool.id === 'image-filters'
+                          ? 'Apply Filters Now'
+                          : tool.id === 'image-watermark'
+                          ? 'Apply Watermark Now'
+                          : tool.id === 'canvas-image-editor'
+                          ? 'Apply Edits & Render Image'
+                          : 'Process Image Now'}
+                      </span>
                     </>
                   )}
                 </button>

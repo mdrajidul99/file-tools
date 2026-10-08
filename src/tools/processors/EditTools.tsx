@@ -92,36 +92,46 @@ export const EditTools: React.FC<Props> = ({ tool }) => {
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            Case Conversion & Formatting
+            Case Conversion Actions:
           </span>
-          <div className="flex flex-wrap gap-1.5 text-xs">
+          <div className="flex flex-wrap gap-2 text-xs">
             <button
+              type="button"
               onClick={() => transformCase('upper')}
-              className="rounded-lg bg-slate-100 px-2.5 py-1 font-semibold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl bg-indigo-50 border border-indigo-200 px-3 py-1.5 font-semibold text-indigo-700 hover:bg-indigo-600 hover:text-white dark:bg-indigo-950/60 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white transition disabled:opacity-50"
             >
               UPPERCASE
             </button>
             <button
+              type="button"
               onClick={() => transformCase('lower')}
-              className="rounded-lg bg-slate-100 px-2.5 py-1 font-semibold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl bg-indigo-50 border border-indigo-200 px-3 py-1.5 font-semibold text-indigo-700 hover:bg-indigo-600 hover:text-white dark:bg-indigo-950/60 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white transition disabled:opacity-50"
             >
               lowercase
             </button>
             <button
+              type="button"
               onClick={() => transformCase('title')}
-              className="rounded-lg bg-slate-100 px-2.5 py-1 font-semibold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl bg-indigo-50 border border-indigo-200 px-3 py-1.5 font-semibold text-indigo-700 hover:bg-indigo-600 hover:text-white dark:bg-indigo-950/60 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white transition disabled:opacity-50"
             >
               Title Case
             </button>
             <button
+              type="button"
               onClick={() => transformCase('sentence')}
-              className="rounded-lg bg-slate-100 px-2.5 py-1 font-semibold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl bg-indigo-50 border border-indigo-200 px-3 py-1.5 font-semibold text-indigo-700 hover:bg-indigo-600 hover:text-white dark:bg-indigo-950/60 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white transition disabled:opacity-50"
             >
               Sentence case
             </button>
             <button
+              type="button"
               onClick={() => transformCase('slug')}
-              className="rounded-lg bg-slate-100 px-2.5 py-1 font-semibold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl bg-indigo-50 border border-indigo-200 px-3 py-1.5 font-semibold text-indigo-700 hover:bg-indigo-600 hover:text-white dark:bg-indigo-950/60 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white transition disabled:opacity-50"
             >
               slug-format
             </button>
@@ -130,30 +140,38 @@ export const EditTools: React.FC<Props> = ({ tool }) => {
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3 dark:border-slate-800">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            Line Utilities
+            Line Formatting Actions:
           </span>
-          <div className="flex flex-wrap gap-1.5 text-xs">
+          <div className="flex flex-wrap gap-2 text-xs">
             <button
+              type="button"
               onClick={() => transformLines('remove-empty')}
-              className="rounded-lg border border-slate-200 px-2.5 py-1 font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-semibold text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition disabled:opacity-50"
             >
               Remove Blank Lines
             </button>
             <button
+              type="button"
               onClick={() => transformLines('dedup')}
-              className="rounded-lg border border-slate-200 px-2.5 py-1 font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-semibold text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition disabled:opacity-50"
             >
               Deduplicate Lines
             </button>
             <button
+              type="button"
               onClick={() => transformLines('sort')}
-              className="rounded-lg border border-slate-200 px-2.5 py-1 font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-semibold text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition disabled:opacity-50"
             >
               Sort Alphabetically
             </button>
             <button
+              type="button"
               onClick={() => transformLines('trim')}
-              className="rounded-lg border border-slate-200 px-2.5 py-1 font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 transition"
+              disabled={!text}
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-semibold text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition disabled:opacity-50"
             >
               Trim Spaces
             </button>
