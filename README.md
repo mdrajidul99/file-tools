@@ -4,7 +4,7 @@
 > Fast, free, and secure online file utilities. Convert, compress, edit, create, scan, and inspect your files right in your browser with zero server uploads.
 
 - **Website Name:** File Tools
-- **Logo:** [pxdrop.online/raw/db2q5e281qec73f6opbg](https://pxdrop.online/raw/db2q5e281qec73f6opbg)
+- **Logo:** Local asset (`public/logo.png`, `src/assets/logo.png`)
 - **Developer:** MRS Engineers BD
 - **Developer Email:** [mrs.engineers.bd26@gmail.com](mailto:mrs.engineers.bd26@gmail.com)
 - **Target GitHub Pages URL:** [https://mdrajidul99.github.io/file-tools/](https://mdrajidul99.github.io/file-tools/)

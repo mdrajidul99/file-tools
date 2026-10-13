@@ -6,16 +6,16 @@
     <meta name="google-site-verification" content="M79ZGDWktcUTYriGDiZG5TpQ3ZiUFHVkK9lN6q8llug" />
     <title>File Tools – Free All-in-One Online File Utilities</title>
     <meta name="description" content="All-in-one free, client-side file tools: convert, compress, edit, create, inspect and analyze files securely in your browser." />
-    <link rel="icon" type="image/png" href="https://pxdrop.online/raw/db2q5e281qec73f6opbg" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
     <meta property="og:title" content="File Tools – Free All-in-One Online File Utilities" />
     <meta property="og:description" content="All-in-one free, client-side file tools: convert, compress, edit, create, inspect and analyze files securely in your browser." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://pxdrop.online/raw/db2q5e281qec73f6opbg" />
+    <meta property="og:image" content="https://mdrajidul99.github.io/file-tools/logo.png" />
     <meta property="og:site_name" content="File Tools" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="File Tools – Free All-in-One Online File Utilities" />
     <meta name="twitter:description" content="All-in-one free, client-side file tools: convert, compress, edit, create, inspect and analyze files securely in your browser." />
-    <meta name="twitter:image" content="https://pxdrop.online/raw/db2q5e281qec73f6opbg" />
+    <meta name="twitter:image" content="https://mdrajidul99.github.io/file-tools/logo.png" />
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -38,6 +38,22 @@
     }
     </script>
     <script type="text/javascript">
+      // Early Source Code and Inspection Protection
+      (function() {
+        document.addEventListener('contextmenu', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+          e.preventDefault();
+        });
+        document.addEventListener('keydown', function(e) {
+          var k = e.key;
+          var isCtrl = e.ctrlKey || e.metaKey;
+          if (k === 'F12' || (isCtrl && e.shiftKey && (k === 'I' || k === 'i' || k === 'J' || k === 'j' || k === 'C' || k === 'c')) || (isCtrl && (k === 'u' || k === 'U' || k === 's' || k === 'S'))) {
+            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') && (k === 's' || k === 'S')) return;
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+      })();
       // Single Page Apps for GitHub Pages redirect receiver
       (function(l) {
         if (l.search[1] === '/' ) {

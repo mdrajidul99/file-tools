@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Moon, Sun, Search, Menu, X, Globe } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 interface HeaderProps {
   currentPath: string;
@@ -36,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
             className="group flex items-center gap-3 text-left focus:outline-none"
           >
             <img
-              src="https://pxdrop.online/raw/db2q5e281qec73f6opbg"
+              src={logoImg}
               alt="File Tools Logo"
               className="h-10 w-10 rounded-xl object-contain shadow-xs transition-transform duration-200 group-hover:scale-105"
             />

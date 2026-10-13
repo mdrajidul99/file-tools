@@ -2,6 +2,7 @@ import React from 'react';
 import { useApp } from '../context/AppContext';
 import { AdsterraAd } from '../components/AdsterraAd';
 import { Mail } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 export const AboutPage: React.FC = () => {
   const { t } = useApp();
@@ -22,7 +23,7 @@ export const AboutPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <img
-              src="https://pxdrop.online/raw/db2q5e281qec73f6opbg"
+              src={logoImg}
               alt="File Tools Logo"
               className="h-16 w-16 rounded-2xl object-contain shadow-xs"
             />

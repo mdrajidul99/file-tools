@@ -2,6 +2,7 @@ import React from 'react';
 import { useApp } from '../context/AppContext';
 import { CATEGORIES } from '../data/toolsRegistry';
 import { Mail } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 interface FooterProps {
   onNavigate: (path: string) => void;
@@ -18,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
               <img
-                src="https://pxdrop.online/raw/db2q5e281qec73f6opbg"
+                src={logoImg}
                 alt="File Tools"
                 className="h-9 w-9 rounded-xl object-contain shadow-xs"
               />
